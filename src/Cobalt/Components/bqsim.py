@@ -8213,7 +8213,7 @@ class BGQsim(Simulator):
                 print(e)
                 continue
             try:
-                jobs_end_times = self.jobs_end_times[jobid_int]
+                job_end_times = self.jobs_end_times[jobid_int]
             except Exception as e:
                 print("Error - couldn't find jobs_end_times -" + str(jobid))
                 print(e)
