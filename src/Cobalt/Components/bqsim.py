@@ -8155,6 +8155,9 @@ class BGQsim(Simulator):
         total_overhead_core_hours_trimmed = 0.0
         for jobid, overhead_records_by_id in self.overhead_records.iteritems():
             tmp_job_size = self.started_job_dict[str(jobid)].get('partsize')
+            if tmp_job_size is None:
+                print("Error - couldn't find job size record in started_job_dict - " + str(jobid))
+                continue
 
             job_overhead_records_to_remove = []
             for job_overhead_record in overhead_records_by_id:
