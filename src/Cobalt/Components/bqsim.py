@@ -901,6 +901,9 @@ class BGQsim(Simulator):
                 if job_temp in highPriorityJobs:
                     continue
 
+                if float(job_temp.get('walltime')) > 15:
+                    continue
+
                 if  rt_job_categories == 'all':
                     pass
                 elif rt_job_categories == 'short':
@@ -8203,8 +8206,21 @@ class BGQsim(Simulator):
         # combine job event entries:
         for jobid, job in self.started_job_dict.iteritems():
             jobid_int = int(jobid)
-            job_start_times = self.jobs_start_times[jobid_int]
-            job_end_times = self.jobs_end_times[jobid_int]
+            try:
+                job_start_times = self.jobs_start_times[jobid_int]
+            except Exception as e:
+                print("Error - couldn't find job_start_times -" + str(jobid))
+                print(e)
+                continue
+            try:
+                jobs_end_times = self.jobs_end_times[jobid_int]
+            except Exception as e:
+                print("Error - couldn't find jobs_end_times -" + str(jobid))
+                print(e)
+                continue
+
+            # job_end_times = self.jobs_end_times[jobid_int]
+
             if jobid_int in self.jobs_kill_times:
                 job_kill_times = self.jobs_kill_times[jobid_int]
             else:
